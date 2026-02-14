@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Obesity Risk Assessment - AI-powered prediction using lifestyle and dietary factors">
+    <title>Obesity Risk | VitaPredict</title>
+  <script type="module" crossorigin src="./assets/obesity-C_Rw5Z4E.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/styles-BdJvXe3Y.js">
+  <link rel="modulepreload" crossorigin href="./assets/predictions-CdCZsII3.js">
+  <link rel="stylesheet" crossorigin href="./assets/styles-uNkwTFwk.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="/" class="navbar-brand">Vita<span>Predict</span></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/cardiovascular.html">Cardiovascular</a></li>
+                <li><a href="/diabetes.html">Diabetes</a></li>
+                <li><a href="/heart-disease.html">Heart Disease</a></li>
+                <li><a href="/obesity.html" class="active">Obesity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <span>Obesity Risk</span>
+            </div>
+            <h1>⚖️ Obesity Risk Assessment</h1>
+            <p>Evaluate your obesity risk based on physical measurements, dietary habits, and lifestyle factors for
+                personalized health insights.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <div class="disclaimer">
+                <p class="disclaimer-title">⚠️ Medical Disclaimer</p>
+                <p>This tool is for educational purposes only. Results are based on statistical models and should not
+                    replace professional medical advice.</p>
+            </div>
+
+            <div class="card mt-xl">
+                <h3>Physical Measurements</h3>
+                <form id="obesity-form" class="mt-lg">
+                    <div class="form-grid">
+                        <!-- Height -->
+                        <div class="form-group">
+                            <label class="form-label">Height (cm) <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="height" min="140" max="200" value="170">
+                            <div class="range-labels">
+                                <span>140 cm</span>
+                                <span class="range-value" id="height-value">170</span>
+                                <span>200 cm</span>
+                            </div>
+                        </div>
+
+                        <!-- Weight -->
+                        <div class="form-group">
+                            <label class="form-label">Weight (kg) <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="weight" min="40" max="150" value="70">
+                            <div class="range-labels">
+                                <span>40 kg</span>
+                                <span class="range-value" id="weight-value">70</span>
+                                <span>150 kg</span>
+                            </div>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="form-group">
+                            <label class="form-label">Age <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="age" min="14" max="80" value="30">
+                            <div class="range-labels">
+                                <span>14</span>
+                                <span class="range-value" id="age-value">30</span>
+                                <span>80</span>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-group">
+                            <label class="form-label">Gender <span class="required">*</span></label>
+                            <select class="form-select" id="gender">
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-xl mb-lg">Dietary Habits</h4>
+                    <div class="form-grid">
+                        <!-- Vegetable Consumption -->
+                        <div class="form-group">
+                            <label class="form-label">Vegetable Servings per Day</label>
+                            <input type="range" class="form-range" id="vegetables" min="0" max="5" value="2">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span class="range-value" id="vegetables-value">2</span>
+                                <span>5+</span>
+                            </div>
+                        </div>
+
+                        <!-- Number of Meals -->
+                        <div class="form-group">
+                            <label class="form-label">Meals per Day</label>
+                            <select class="form-select" id="meals">
+                                <option value="1">1-2 meals</option>
+                                <option value="3" selected>3 meals</option>
+                                <option value="4">4+ meals</option>
+                            </select>
+                        </div>
+
+                        <!-- Water Intake -->
+                        <div class="form-group">
+                            <label class="form-label">Glasses of Water per Day</label>
+                            <input type="range" class="form-range" id="water" min="1" max="10" value="6">
+                            <div class="range-labels">
+                                <span>1</span>
+                                <span class="range-value" id="water-value">6</span>
+                                <span>10+</span>
+                            </div>
+                        </div>
+
+                        <!-- Alcohol Consumption -->
+                        <div class="form-group">
+                            <label class="form-label">Alcohol Consumption</label>
+                            <select class="form-select" id="alcohol">
+                                <option value="never">Never</option>
+                                <option value="sometimes">Sometimes</option>
+                                <option value="frequently">Frequently</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-xl mb-lg">Lifestyle Factors</h4>
+                    <div class="form-grid">
+                        <!-- Physical Activity -->
+                        <div class="form-group">
+                            <label class="form-label">Physical Activity Level</label>
+                            <select class="form-select" id="physicalActivity">
+                                <option value="none">None</option>
+                                <option value="low">Low (1-2 days/week)</option>
+                                <option value="moderate" selected>Moderate (3-4 days/week)</option>
+                                <option value="high">High (5+ days/week)</option>
+                            </select>
+                        </div>
+
+                        <!-- Family History -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="familyHistory"> Family history of obesity?
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg mt-xl">
+                        Calculate Obesity Risk
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Panel -->
+            <div id="results" class="results-panel hidden">
+                <h3>Your Obesity Risk Assessment</h3>
+
+                <div class="result-header">
+                    <span id="risk-badge" class="result-badge"></span>
+                    <div>
+                        <div class="result-probability">
+                            BMI: <span id="bmi-value">0</span>
+                        </div>
+                        <div class="text-muted" id="bmi-category">Category</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+
+                <div
+                    style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    <span>Underweight<br>&lt;18.5</span>
+                    <span>Normal<br>18.5-24.9</span>
+                    <span>Overweight<br>25-29.9</span>
+                    <span>Obese I<br>30-34.9</span>
+                    <span>Obese II<br>35-39.9</span>
+                    <span>Obese III<br>40+</span>
+                </div>
+
+                <div class="feature-chart mt-xl">
+                    <h4>Contributing Risk Factors</h4>
+                    <p class="text-muted mb-lg">Factors influencing your obesity risk assessment</p>
+                    <div id="factors-chart"></div>
+                </div>
+
+                <div class="mt-xl">
+                    <h4>Recommendations</h4>
+                    <p id="explanation" class="text-muted"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 VitaPredict. Educational purposes only.</p>
+                <p>Based on Obesity Levels Dataset research</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

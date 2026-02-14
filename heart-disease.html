@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Heart Disease Risk Assessment with Explainable AI - SHAP-powered predictions">
+    <title>Heart Disease (XAI) | VitaPredict</title>
+  <script type="module" crossorigin src="./assets/heartDisease-DDdxrq6C.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/styles-BdJvXe3Y.js">
+  <link rel="modulepreload" crossorigin href="./assets/predictions-CdCZsII3.js">
+  <link rel="stylesheet" crossorigin href="./assets/styles-uNkwTFwk.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="/" class="navbar-brand">Vita<span>Predict</span></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/cardiovascular.html">Cardiovascular</a></li>
+                <li><a href="/diabetes.html">Diabetes</a></li>
+                <li><a href="/heart-disease.html" class="active">Heart Disease</a></li>
+                <li><a href="/obesity.html">Obesity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <span>Heart Disease (XAI)</span>
+            </div>
+            <h1>❤️ Heart Disease Prediction</h1>
+            <p>Explainable AI-powered heart disease risk assessment with SHAP-style feature importance analysis showing
+                exactly what factors influence your prediction.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <div class="disclaimer">
+                <p class="disclaimer-title">⚠️ Medical Disclaimer</p>
+                <p>This tool is for educational purposes only. Results are based on statistical models and should not
+                    replace professional medical advice.</p>
+            </div>
+
+            <div class="card mt-xl">
+                <h3>Patient Information</h3>
+                <form id="heart-form" class="mt-lg">
+                    <div class="form-grid">
+                        <!-- Age -->
+                        <div class="form-group">
+                            <label class="form-label">Age <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="age" min="29" max="77" value="54">
+                            <div class="range-labels">
+                                <span>29</span>
+                                <span class="range-value" id="age-value">54</span>
+                                <span>77</span>
+                            </div>
+                        </div>
+
+                        <!-- Sex -->
+                        <div class="form-group">
+                            <label class="form-label">Sex <span class="required">*</span></label>
+                            <select class="form-select" id="sex">
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                            </select>
+                        </div>
+
+                        <!-- Chest Pain Type -->
+                        <div class="form-group">
+                            <label class="form-label">Chest Pain Type <span class="required">*</span></label>
+                            <select class="form-select" id="chestPain">
+                                <option value="asymptomatic">Asymptomatic</option>
+                                <option value="nonanginal">Non-Anginal Pain</option>
+                                <option value="atypical">Atypical Angina</option>
+                                <option value="typical">Typical Angina</option>
+                            </select>
+                        </div>
+
+                        <!-- Resting Blood Pressure -->
+                        <div class="form-group">
+                            <label class="form-label">Resting Blood Pressure (mmHg) <span
+                                    class="required">*</span></label>
+                            <input type="range" class="form-range" id="restingBP" min="94" max="200" value="130">
+                            <div class="range-labels">
+                                <span>94</span>
+                                <span class="range-value" id="restingBP-value">130</span>
+                                <span>200</span>
+                            </div>
+                        </div>
+
+                        <!-- Cholesterol -->
+                        <div class="form-group">
+                            <label class="form-label">Serum Cholesterol (mg/dl) <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="cholesterol" min="126" max="564" value="240">
+                            <div class="range-labels">
+                                <span>126</span>
+                                <span class="range-value" id="cholesterol-value">240</span>
+                                <span>564</span>
+                            </div>
+                        </div>
+
+                        <!-- Fasting Blood Sugar -->
+                        <div class="form-group">
+                            <label class="form-label">Fasting Blood Sugar >120 mg/dl</label>
+                            <select class="form-select" id="fastingBS">
+                                <option value="false">No (≤120 mg/dl)</option>
+                                <option value="true">Yes (>120 mg/dl)</option>
+                            </select>
+                        </div>
+
+                        <!-- Resting ECG -->
+                        <div class="form-group">
+                            <label class="form-label">Resting ECG Result</label>
+                            <select class="form-select" id="restingECG">
+                                <option value="normal">Normal</option>
+                                <option value="abnormal">ST-T Wave Abnormality</option>
+                                <option value="hypertrophy">Left Ventricular Hypertrophy</option>
+                            </select>
+                        </div>
+
+                        <!-- Maximum Heart Rate -->
+                        <div class="form-group">
+                            <label class="form-label">Maximum Heart Rate Achieved <span
+                                    class="required">*</span></label>
+                            <input type="range" class="form-range" id="maxHR" min="71" max="202" value="150">
+                            <div class="range-labels">
+                                <span>71</span>
+                                <span class="range-value" id="maxHR-value">150</span>
+                                <span>202</span>
+                            </div>
+                        </div>
+
+                        <!-- Exercise Induced Angina -->
+                        <div class="form-group">
+                            <label class="form-label">Exercise Induced Angina</label>
+                            <select class="form-select" id="exerciseAngina">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </div>
+
+                        <!-- ST Depression -->
+                        <div class="form-group">
+                            <label class="form-label">ST Depression (oldpeak) <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="stDepression" min="0" max="6.2" value="1"
+                                step="0.1">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span class="range-value" id="stDepression-value">1.0</span>
+                                <span>6.2</span>
+                            </div>
+                        </div>
+
+                        <!-- ST Slope -->
+                        <div class="form-group">
+                            <label class="form-label">Slope of ST Segment</label>
+                            <select class="form-select" id="stSlope">
+                                <option value="upsloping">Upsloping</option>
+                                <option value="flat">Flat</option>
+                                <option value="downsloping">Downsloping</option>
+                            </select>
+                        </div>
+
+                        <!-- Number of Major Vessels -->
+                        <div class="form-group">
+                            <label class="form-label">Major Vessels Colored (0-4)</label>
+                            <select class="form-select" id="vessels">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+
+                        <!-- Thalassemia -->
+                        <div class="form-group">
+                            <label class="form-label">Thalassemia</label>
+                            <select class="form-select" id="thalassemia">
+                                <option value="normal">Normal</option>
+                                <option value="fixed">Fixed Defect</option>
+                                <option value="reversible">Reversible Defect</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg mt-xl">
+                        Predict & Explain
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Panel -->
+            <div id="results" class="results-panel hidden">
+                <h3>Heart Disease Risk Assessment</h3>
+
+                <div class="result-header">
+                    <span id="risk-badge" class="result-badge"></span>
+                    <div class="result-probability">
+                        <span id="probability-value">0</span>%
+                        <span>probability of disease</span>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+
+                <div class="feature-chart">
+                    <h4>AI Explanation: Feature Impact Breakdown</h4>
+                    <p class="text-muted mb-lg">
+                        <strong>Red bars (positive values)</strong> = Features that INCREASE heart disease risk<br>
+                        <strong>Blue bars (negative values)</strong> = Features that DECREASE heart disease risk
+                    </p>
+                    <div id="factors-chart"></div>
+                </div>
+
+                <div class="mt-xl">
+                    <h4>Clinical Interpretation</h4>
+                    <p id="explanation" class="text-muted"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 VitaPredict. Educational purposes only.</p>
+                <p>Based on Heart Disease UCI Dataset with SHAP explainability</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
