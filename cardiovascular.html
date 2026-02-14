@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Cardiovascular Disease Risk Assessment - AI-powered prediction with fairness analysis">
+    <title>Cardiovascular Risk | VitaPredict</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="/" class="navbar-brand">Vita<span>Predict</span></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/cardiovascular.html" class="active">Cardiovascular</a></li>
+                <li><a href="/diabetes.html">Diabetes</a></li>
+                <li><a href="/heart-disease.html">Heart Disease</a></li>
+                <li><a href="/obesity.html">Obesity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <span>Cardiovascular Disease</span>
+            </div>
+            <h1>🫀 Cardiovascular Disease Risk</h1>
+            <p>Assess your cardiovascular disease risk using blood pressure, cholesterol, lifestyle factors and
+                demographic data with bias-aware AI analysis.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <div class="disclaimer">
+                <p class="disclaimer-title">⚠️ Medical Disclaimer</p>
+                <p>This tool is for educational purposes only. Results are based on statistical models and should not
+                    replace professional medical advice.</p>
+            </div>
+
+            <div class="card mt-xl">
+                <h3>Enter Your Health Information</h3>
+                <form id="cvd-form" class="mt-lg">
+                    <div class="form-grid">
+                        <!-- Age -->
+                        <div class="form-group">
+                            <label class="form-label">Age <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="age" min="20" max="90" value="45">
+                            <div class="range-labels">
+                                <span>20</span>
+                                <span class="range-value" id="age-value">45</span>
+                                <span>90</span>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-group">
+                            <label class="form-label">Gender <span class="required">*</span></label>
+                            <select class="form-select" id="gender">
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                            </select>
+                        </div>
+
+                        <!-- Blood Pressure Systolic -->
+                        <div class="form-group">
+                            <label class="form-label">Systolic Blood Pressure (mmHg) <span
+                                    class="required">*</span></label>
+                            <input type="range" class="form-range" id="bp-sys" min="90" max="200" value="120">
+                            <div class="range-labels">
+                                <span>90</span>
+                                <span class="range-value" id="bp-sys-value">120</span>
+                                <span>200</span>
+                            </div>
+                        </div>
+
+                        <!-- Blood Pressure Diastolic -->
+                        <div class="form-group">
+                            <label class="form-label">Diastolic Blood Pressure (mmHg) <span
+                                    class="required">*</span></label>
+                            <input type="range" class="form-range" id="bp-dia" min="60" max="130" value="80">
+                            <div class="range-labels">
+                                <span>60</span>
+                                <span class="range-value" id="bp-dia-value">80</span>
+                                <span>130</span>
+                            </div>
+                        </div>
+
+                        <!-- Cholesterol -->
+                        <div class="form-group">
+                            <label class="form-label">Cholesterol Level <span class="required">*</span></label>
+                            <select class="form-select" id="cholesterol">
+                                <option value="normal">Normal</option>
+                                <option value="borderline">Borderline High</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+
+                        <!-- BMI -->
+                        <div class="form-group">
+                            <label class="form-label">BMI <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="bmi" min="15" max="45" value="25" step="0.1">
+                            <div class="range-labels">
+                                <span>15</span>
+                                <span class="range-value" id="bmi-value">25.0</span>
+                                <span>45</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-xl mb-lg">Lifestyle Factors</h4>
+                    <div class="form-grid">
+                        <!-- Smoking -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="smoking"> Do you smoke?
+                            </label>
+                        </div>
+
+                        <!-- Alcohol -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="alcohol"> Regular alcohol consumption?
+                            </label>
+                        </div>
+
+                        <!-- Physical Activity -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="physical" checked> Regular physical activity?
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg mt-xl">
+                        Calculate CVD Risk
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Panel (Hidden by default) -->
+            <div id="results" class="results-panel hidden">
+                <h3>Your CVD Risk Assessment</h3>
+
+                <div class="result-header">
+                    <span id="risk-badge" class="result-badge"></span>
+                    <div class="result-probability">
+                        <span id="probability-value">0</span>%
+                        <span>probability</span>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+
+                <div class="feature-chart">
+                    <h4>Factors Contributing to Your Risk</h4>
+                    <p class="text-muted mb-lg">Red bars increase risk, blue bars decrease risk</p>
+                    <div id="factors-chart"></div>
+                </div>
+
+                <div class="mt-xl">
+                    <h4>What This Means</h4>
+                    <p id="explanation" class="text-muted"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 VitaPredict. Educational purposes only.</p>
+                <p>Based on cardiovascular disease prediction research</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { predictCardiovascular, getRiskLabel } from '/js/predictions.js';
+
+        // Range slider updates
+        const sliders = ['age', 'bp-sys', 'bp-dia', 'bmi'];
+        sliders.forEach(id => {
+            const slider = document.getElementById(id);
+            const display = document.getElementById(`${id}-value`);
+            slider?.addEventListener('input', () => {
+                display.textContent = id === 'bmi' ? parseFloat(slider.value).toFixed(1) : slider.value;
+            });
+        });
+
+        // Form submission
+        document.getElementById('cvd-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const data = {
+                age: parseInt(document.getElementById('age').value),
+                gender: document.getElementById('gender').value,
+                bloodPressureSys: parseInt(document.getElementById('bp-sys').value),
+                bloodPressureDia: parseInt(document.getElementById('bp-dia').value),
+                cholesterol: document.getElementById('cholesterol').value,
+                bmi: parseFloat(document.getElementById('bmi').value),
+                smoking: document.getElementById('smoking').checked,
+                alcohol: document.getElementById('alcohol').checked,
+                physical: document.getElementById('physical').checked
+            };
+
+            const result = predictCardiovascular(data);
+            displayResults(result);
+        });
+
+        function displayResults(result) {
+            const resultsPanel = document.getElementById('results');
+            resultsPanel.classList.remove('hidden');
+
+            // Risk badge
+            const badge = document.getElementById('risk-badge');
+            badge.className = `result-badge ${result.riskLevel}-risk`;
+            badge.textContent = getRiskLabel(result.riskLevel);
+
+            // Probability
+            const prob = Math.round(result.probability * 100);
+            document.getElementById('probability-value').textContent = prob;
+
+            // Progress bar
+            const fill = document.getElementById('progress-fill');
+            fill.className = `progress-fill ${result.riskLevel}`;
+            fill.style.width = `${prob}%`;
+
+            // Factor chart
+            const chartContainer = document.getElementById('factors-chart');
+            chartContainer.innerHTML = result.factors.map(f => `
+        <div class="feature-bar">
+          <span class="feature-name">${f.name}</span>
+          <div class="feature-bar-container">
+            <div class="feature-bar-fill ${f.positive ? 'positive' : 'negative'}" 
+                 style="width: ${Math.abs(f.impact) * 100}%"></div>
+          </div>
+          <span class="feature-value">${f.positive ? '+' : ''}${(f.impact * 100).toFixed(0)}%</span>
+        </div>
+      `).join('');
+
+            // Explanation
+            const explanations = {
+                high: 'Your cardiovascular disease risk is elevated. Multiple factors contribute to this assessment. Please consult with a healthcare professional for personalized advice and potential lifestyle modifications.',
+                medium: 'You have a moderate risk of cardiovascular disease. Some lifestyle modifications may help reduce your risk. Consider discussing prevention strategies with your doctor.',
+                low: 'Your cardiovascular disease risk appears to be low based on the provided information. Continue maintaining healthy habits and regular check-ups.'
+            };
+            document.getElementById('explanation').textContent = explanations[result.riskLevel];
+
+            // Scroll to results
+            resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Mobile nav toggle
+        document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>

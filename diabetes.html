@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Diabetes Risk Prediction - AI-powered assessment using glucose, BMI and health metrics">
+    <title>Diabetes Prediction | VitaPredict</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="/" class="navbar-brand">Vita<span>Predict</span></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/cardiovascular.html">Cardiovascular</a></li>
+                <li><a href="/diabetes.html" class="active">Diabetes</a></li>
+                <li><a href="/heart-disease.html">Heart Disease</a></li>
+                <li><a href="/obesity.html">Obesity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <span>Diabetes Prediction</span>
+            </div>
+            <h1>💉 Diabetes Risk Prediction</h1>
+            <p>Predict your type 2 diabetes risk using glucose levels, BMI, blood pressure, and metabolic indicators.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <div class="disclaimer">
+                <p class="disclaimer-title">⚠️ Medical Disclaimer</p>
+                <p>This tool is for educational purposes only. Results are based on statistical models and should not
+                    replace professional medical advice.</p>
+            </div>
+
+            <div class="card mt-xl">
+                <h3>Enter Your Health Metrics</h3>
+                <form id="diabetes-form" class="mt-lg">
+                    <div class="form-grid">
+                        <!-- Glucose -->
+                        <div class="form-group">
+                            <label class="form-label">Glucose Level (mg/dL) <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="glucose" min="50" max="250" value="100">
+                            <div class="range-labels">
+                                <span>50</span>
+                                <span class="range-value" id="glucose-value">100</span>
+                                <span>250</span>
+                            </div>
+                            <small class="text-muted">Normal: 70-100 | Pre-diabetic: 100-125 | Diabetic: 126+</small>
+                        </div>
+
+                        <!-- BMI -->
+                        <div class="form-group">
+                            <label class="form-label">BMI <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="bmi" min="15" max="50" value="25" step="0.1">
+                            <div class="range-labels">
+                                <span>15</span>
+                                <span class="range-value" id="bmi-value">25.0</span>
+                                <span>50</span>
+                            </div>
+                            <small class="text-muted">Normal: 18.5-24.9 | Overweight: 25-29.9 | Obese: 30+</small>
+                        </div>
+
+                        <!-- Blood Pressure -->
+                        <div class="form-group">
+                            <label class="form-label">Blood Pressure (Systolic mmHg) <span
+                                    class="required">*</span></label>
+                            <input type="range" class="form-range" id="bloodPressure" min="80" max="180" value="120">
+                            <div class="range-labels">
+                                <span>80</span>
+                                <span class="range-value" id="bloodPressure-value">120</span>
+                                <span>180</span>
+                            </div>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="form-group">
+                            <label class="form-label">Age <span class="required">*</span></label>
+                            <input type="range" class="form-range" id="age" min="18" max="85" value="40">
+                            <div class="range-labels">
+                                <span>18</span>
+                                <span class="range-value" id="age-value">40</span>
+                                <span>85</span>
+                            </div>
+                        </div>
+
+                        <!-- Insulin -->
+                        <div class="form-group">
+                            <label class="form-label">Insulin Level (mu U/ml)</label>
+                            <input type="range" class="form-range" id="insulin" min="0" max="300" value="80">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span class="range-value" id="insulin-value">80</span>
+                                <span>300</span>
+                            </div>
+                            <small class="text-muted">Normal: 16-166 | Elevated: 166+</small>
+                        </div>
+
+                        <!-- Skin Thickness -->
+                        <div class="form-group">
+                            <label class="form-label">Skin Thickness (mm)</label>
+                            <input type="range" class="form-range" id="skinThickness" min="0" max="60" value="20">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span class="range-value" id="skinThickness-value">20</span>
+                                <span>60</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg mt-xl">
+                        Predict Diabetes Risk
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Panel -->
+            <div id="results" class="results-panel hidden">
+                <h3>Your Diabetes Risk Assessment</h3>
+
+                <div class="result-header">
+                    <span id="risk-badge" class="result-badge"></span>
+                    <div class="result-probability">
+                        <span id="probability-value">0</span>%
+                        <span>probability</span>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+
+                <div class="feature-chart">
+                    <h4>Key Risk Factors</h4>
+                    <p class="text-muted mb-lg">Factors influencing your diabetes risk assessment</p>
+                    <div id="factors-chart"></div>
+                </div>
+
+                <div class="mt-xl">
+                    <h4>Interpretation</h4>
+                    <p id="explanation" class="text-muted"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 VitaPredict. Educational purposes only.</p>
+                <p>Based on Pima Indians Diabetes Dataset research</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { predictDiabetes, getRiskLabel } from '/js/predictions.js';
+
+        // Range slider updates
+        const sliders = ['glucose', 'bmi', 'bloodPressure', 'age', 'insulin', 'skinThickness'];
+        sliders.forEach(id => {
+            const slider = document.getElementById(id);
+            const display = document.getElementById(`${id}-value`);
+            slider?.addEventListener('input', () => {
+                display.textContent = id === 'bmi' ? parseFloat(slider.value).toFixed(1) : slider.value;
+            });
+        });
+
+        // Form submission
+        document.getElementById('diabetes-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const data = {
+                glucose: parseInt(document.getElementById('glucose').value),
+                bmi: parseFloat(document.getElementById('bmi').value),
+                bloodPressure: parseInt(document.getElementById('bloodPressure').value),
+                age: parseInt(document.getElementById('age').value),
+                insulin: parseInt(document.getElementById('insulin').value),
+                skinThickness: parseInt(document.getElementById('skinThickness').value)
+            };
+
+            const result = predictDiabetes(data);
+            displayResults(result);
+        });
+
+        function displayResults(result) {
+            const resultsPanel = document.getElementById('results');
+            resultsPanel.classList.remove('hidden');
+
+            // Risk badge
+            const badge = document.getElementById('risk-badge');
+            badge.className = `result-badge ${result.riskLevel}-risk`;
+            badge.textContent = getRiskLabel(result.riskLevel);
+
+            // Probability
+            const prob = Math.round(result.probability * 100);
+            document.getElementById('probability-value').textContent = prob;
+
+            // Progress bar
+            const fill = document.getElementById('progress-fill');
+            fill.className = `progress-fill ${result.riskLevel}`;
+            fill.style.width = `${prob}%`;
+
+            // Factor chart
+            const chartContainer = document.getElementById('factors-chart');
+            chartContainer.innerHTML = result.factors.map(f => `
+        <div class="feature-bar">
+          <span class="feature-name">${f.name}</span>
+          <div class="feature-bar-container">
+            <div class="feature-bar-fill ${f.positive ? 'positive' : 'negative'}" 
+                 style="width: ${Math.abs(f.impact) * 100}%"></div>
+          </div>
+          <span class="feature-value">${f.positive ? '+' : ''}${(f.impact * 100).toFixed(0)}%</span>
+        </div>
+      `).join('');
+
+            // Explanation
+            const explanations = {
+                high: 'Your diabetes risk is elevated based on your glucose levels and other metabolic indicators. High glucose combined with elevated BMI significantly increases diabetes risk. Please consult an endocrinologist.',
+                medium: 'You show moderate risk factors for diabetes. Consider lifestyle modifications including diet changes and regular exercise. Regular glucose monitoring is recommended.',
+                low: 'Your diabetes risk appears low based on current metrics. Maintain healthy habits, balanced diet, and regular physical activity to keep your risk low.'
+            };
+            document.getElementById('explanation').textContent = explanations[result.riskLevel];
+
+            resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Mobile nav toggle
+        document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
